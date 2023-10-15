@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+struct Question 
+{
+    string questionText;
+    vector<string> options;
+    int correctOption;
+};
+void displayQuestion(const Question& question) 
+{
+    cout << question.questionText << endl;
+    for (int i = 0; i < question.options.size(); ++i) 
+    {
+        cout << i + 1 << ". " << question.options[i] << endl;
+    }
+}
+int getUserAnswer()
+{
+    int choice;
+    cout << "Enter your answer (1-" << 4 << "): ";
+    cin >> choice;
+    return choice;
+}
+bool isAnswerCorrect(const Question& question, int userChoice)
+{
+    return userChoice == question.correctOption;
+}
+int main() 
+{
+    vector<Question> quiz;
+    Question question1;
+    question1.questionText = "What is the capital of France?";
+    question1.options = {"New York", "London", "Paris", "Berlin"};
+    question1.correctOption = 3;
+    quiz.push_back(question1);
+    Question question2;
+    question2.questionText = "Which planet is known as the Red Planet?";
+    question2.options = {"Mars", "Venus", "Earth", "Jupiter"};
+    question2.correctOption = 1;
+    quiz.push_back(question2);
+    int score = 0;
+    for (const Question& question : quiz) 
+    {
+        displayQuestion(question);
+        int userChoice = getUserAnswer();
+        if (isAnswerCorrect(question, userChoice)) 
+        {
+            cout << "Correct!" << endl;
+            score++;
+        }
+        else
+        {
+            cout << "Incorrect. The correct answer is option " << question.correctOption << ": "
+                 << question.options[question.correctOption - 1] << endl;
+        }
+        cout << endl;
+    }
+    cout << "Quiz complete. Your score: " << score << "/" << quiz.size() << endl;
+    return 0;
+}
